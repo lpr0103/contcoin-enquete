@@ -111,7 +111,6 @@
   }
   .section-sub { font-size: 13px; color: #888; margin-top: -10px; margin-bottom: 16px; }
 
-  /* OPÇÕES */
   .options-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -146,7 +145,6 @@
     background: var(--verde); border-color: var(--verde); color: #fff;
   }
 
-  /* ESTRATÉGIA */
   .strategy-options { display: flex; flex-direction: column; gap: 8px; }
   .strategy-card { position: relative; cursor: pointer; }
   .strategy-card input[type="radio"] { position: absolute; opacity: 0; width: 0; height: 0; }
@@ -179,7 +177,6 @@
   .strategy-text strong { font-size: 13px; font-weight: 600; color: var(--preto); display: block; margin-bottom: 2px; }
   .strategy-text span { font-size: 12px; color: #888; line-height: 1.4; }
 
-  /* TEXTAREA */
   textarea {
     width: 100%; border: 1.5px solid var(--cinza-mid); border-radius: 12px;
     padding: 13px 15px;
@@ -190,7 +187,6 @@
   textarea:focus { border-color: var(--verde); }
   textarea::placeholder { color: var(--cinza-mid); }
 
-  /* NOME */
   .name-wrap { display: flex; flex-direction: column; gap: 8px; }
   input[type="text"] {
     width: 100%; border: 1.5px solid var(--cinza-mid); border-radius: 10px;
@@ -206,7 +202,6 @@
   }
   .anon-toggle input { accent-color: var(--verde); cursor: pointer; width: 14px; height: 14px; }
 
-  /* BOTÃO */
   .btn-submit {
     width: 100%; padding: 17px;
     background: var(--preto); color: #fff; border: none;
@@ -220,7 +215,6 @@
 
   .divider { border: none; border-top: 1.5px solid var(--cinza); margin: 32px 0; }
 
-  /* SUCESSO */
   .success-screen {
     display: none; text-align: center; padding: 60px 20px;
     animation: fadeUp 0.5s ease forwards;
@@ -240,7 +234,6 @@
   }
   .btn-green:hover { background: var(--verde-dark); }
 
-  /* RESULTADOS */
   .results-screen { display: none; }
   .results-header {
     display: flex; align-items: center; justify-content: space-between;
@@ -299,13 +292,20 @@
   .empty-msg { font-size: 13px; color: #aaa; font-style: italic; }
 
   .export-btn {
-    display: inline-block; margin-top: 10px; padding: 8px 16px;
+    display: inline-block; padding: 8px 16px;
     background: none; border: 1.5px solid var(--cinza-mid);
     border-radius: 8px; font-family: 'Syne', sans-serif;
     font-size: 12px; font-weight: 700; cursor: pointer; color: var(--preto);
     transition: all 0.18s;
   }
   .export-btn:hover { border-color: var(--verde); color: var(--verde); }
+
+  .error-msg {
+    background: #fff0f0; border: 1.5px solid #ffaaaa;
+    border-radius: 10px; padding: 12px 16px;
+    font-size: 13px; color: #cc3333; margin-top: 12px;
+    display: none;
+  }
 </style>
 </head>
 <body>
@@ -325,14 +325,12 @@
 
 <div class="container">
 
-  <!-- ── FORMULÁRIO ── -->
+  <!-- FORMULÁRIO -->
   <div id="formScreen">
-
     <div class="intro section">
       <strong>Você acumula, você escolhe.</strong> Queremos montar um catálogo de recompensas que faça sentido pra você de verdade. Marque as opções que te interessam e deixe sua sugestão — leva menos de 2 minutos! 🚀
     </div>
 
-    <!-- Q1: Experiências -->
     <div class="section">
       <div class="section-label">Pergunta 1 de 3</div>
       <div class="section-title">O que você gostaria de resgatar com suas ContiCoins?</div>
@@ -431,7 +429,6 @@
 
     <hr class="divider">
 
-    <!-- Q2: Estratégia -->
     <div class="section">
       <div class="section-label">Pergunta 2 de 3</div>
       <div class="section-title">Como você prefere usar suas moedas?</div>
@@ -481,14 +478,12 @@
 
     <hr class="divider">
 
-    <!-- Q3: Sugestão -->
     <div class="section">
       <div class="section-label">Pergunta 3 de 3</div>
       <div class="section-title">Tem alguma sugestão que não está na lista?</div>
-      <textarea id="sugestao" placeholder="Ex: vale farmácia, ingresso de parque, assinatura de academia, vale livraria, curso online… qualquer ideia vale! 💡"></textarea>
+      <textarea id="sugestao" placeholder="Ex: vale farmácia, ingresso de parque, academia, vale livraria, curso online… qualquer ideia vale! 💡"></textarea>
     </div>
 
-    <!-- Nome -->
     <div class="section">
       <div class="section-title" style="font-size:15px;margin-bottom:12px;">Como quer se identificar?</div>
       <div class="name-wrap">
@@ -500,23 +495,25 @@
       </div>
     </div>
 
+    <div class="error-msg" id="errorMsg">
+      ⚠️ Erro ao salvar. Verifique sua conexão e tente novamente.
+    </div>
+
     <button class="btn-submit" id="btnEnviar" onclick="enviar()">
       Enviar minha resposta 🪙
     </button>
+  </div>
 
-  </div><!-- /formScreen -->
-
-  <!-- ── SUCESSO ── -->
+  <!-- SUCESSO -->
   <div class="success-screen" id="successScreen">
     <div class="success-coin">🪙</div>
     <h2>Resposta registrada!</h2>
-    <p>Obrigado por participar. Suas preferências vão ajudar a montar o catálogo oficial da ContiCoin. Fique de olho nas novidades! 🎉</p>
+    <p>Obrigado por participar! Suas preferências vão ajudar a montar o catálogo oficial da ContiCoin. Fique de olho nas novidades! 🎉</p>
     <button class="btn-green" onclick="abrirResultados()">Ver resultados da enquete →</button>
   </div>
 
-  <!-- ── RESULTADOS ── -->
+  <!-- RESULTADOS -->
   <div class="results-screen" id="resultsScreen">
-
     <div class="results-header">
       <h2>Resultados da enquete</h2>
       <span class="badge-total" id="totalRespostas">0 respostas</span>
@@ -540,225 +537,242 @@
 
     <br>
     <button class="btn-back" onclick="voltarForm()">← Responder novamente</button>
+  </div>
 
-  </div><!-- /resultsScreen -->
-
-</div><!-- /container -->
+</div>
 
 <script>
-const STORAGE_KEY = 'conticoin_enquete_v3';
+  // ── JSONBin config ────────────────────────────────────
+  const BIN_ID  = '69c6bd68c3097a1dd568b1eb';
+  const API_KEY = '$2a$10$YeGu3TJlhFncYbBUGWjI9.M59dso2XBtQPliZL0cv2PWuEQHRWVoy';
+  const BIN_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
 
-// ── Utilidades ────────────────────────────────────────
-async function loadData() {
-  try {
-    const res = await window.storage.get(STORAGE_KEY, true);
-    return res ? JSON.parse(res.value) : { respostas: [] };
-  } catch(e) { return { respostas: [] }; }
-}
-async function saveData(data) {
-  await window.storage.set(STORAGE_KEY, JSON.stringify(data), true);
-}
-
-function toggleAnon() {
-  const anon = document.getElementById('anonCheck').checked;
-  const inp = document.getElementById('nomeInput');
-  inp.disabled = anon;
-  if (anon) inp.value = '';
-}
-
-// ── Init ─────────────────────────────────────────────
-window.addEventListener('load', async () => {
-  const data = await loadData();
-  if (data.respostas.length > 0) {
-    const btn = document.getElementById('btnVerResultados');
-    btn.style.display = 'block';
-    btn.textContent = 'Ver resultados (' + data.respostas.length + ')';
-  }
-});
-
-// ── Enviar ────────────────────────────────────────────
-async function enviar() {
-  const opcoes = [...document.querySelectorAll('input[name="opcoes"]:checked')].map(e => e.value);
-  const estrategia = document.querySelector('input[name="estrategia"]:checked')?.value || null;
-  const sugestao = document.getElementById('sugestao').value.trim();
-  const anon = document.getElementById('anonCheck').checked;
-  const nomeRaw = document.getElementById('nomeInput').value.trim();
-  const nome = anon ? 'Anônimo' : (nomeRaw || 'Anônimo');
-
-  if (opcoes.length === 0) {
-    alert('Selecione ao menos uma experiência!'); return;
-  }
-  if (!estrategia) {
-    alert('Escolha como prefere usar suas moedas!'); return;
-  }
-
-  const btn = document.getElementById('btnEnviar');
-  btn.disabled = true;
-  btn.innerHTML = 'Salvando <span class="loading-dots"><span>•</span><span>•</span><span>•</span></span>';
-
-  try {
-    const data = await loadData();
-    data.respostas.push({
-      ts: Date.now(),
-      nome,
-      opcoes,
-      estrategia,
-      sugestao: sugestao || null,
+  async function loadData() {
+    const res = await fetch(BIN_URL + '/latest', {
+      headers: { 'X-Master-Key': API_KEY }
     });
-    await saveData(data);
+    if (!res.ok) throw new Error('Erro ao carregar dados');
+    const json = await res.json();
+    return json.record || { respostas: [] };
+  }
 
-    document.getElementById('formScreen').style.display = 'none';
-    document.getElementById('successScreen').style.display = 'block';
-  } catch(e) {
+  async function saveData(data) {
+    const res = await fetch(BIN_URL, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Master-Key': API_KEY
+      },
+      body: JSON.stringify(data)
+    });
+    if (!res.ok) throw new Error('Erro ao salvar dados');
+    return res.json();
+  }
+
+  // ── Helpers ───────────────────────────────────────────
+  function toggleAnon() {
+    const anon = document.getElementById('anonCheck').checked;
+    const inp  = document.getElementById('nomeInput');
+    inp.disabled = anon;
+    if (anon) inp.value = '';
+  }
+
+  // ── Init ──────────────────────────────────────────────
+  window.addEventListener('load', async () => {
+    try {
+      const data = await loadData();
+      const total = (data.respostas || []).length;
+      if (total > 0) {
+        const btn = document.getElementById('btnVerResultados');
+        btn.style.display = 'block';
+        btn.textContent = 'Ver resultados (' + total + ')';
+      }
+    } catch(e) { console.warn('Init load error:', e); }
+  });
+
+  // ── Enviar ────────────────────────────────────────────
+  async function enviar() {
+    const opcoes = [...document.querySelectorAll('input[name="opcoes"]:checked')].map(e => e.value);
+    const estrategia = document.querySelector('input[name="estrategia"]:checked')?.value || null;
+    const sugestao   = document.getElementById('sugestao').value.trim();
+    const anon       = document.getElementById('anonCheck').checked;
+    const nomeRaw    = document.getElementById('nomeInput').value.trim();
+    const nome       = anon ? 'Anônimo' : (nomeRaw || 'Anônimo');
+
+    if (opcoes.length === 0) { alert('Selecione ao menos uma experiência!'); return; }
+    if (!estrategia)         { alert('Escolha como prefere usar suas moedas!'); return; }
+
+    const btn = document.getElementById('btnEnviar');
+    const errEl = document.getElementById('errorMsg');
+    btn.disabled = true;
+    errEl.style.display = 'none';
+    btn.innerHTML = 'Salvando <span class="loading-dots"><span>•</span><span>•</span><span>•</span></span>';
+
+    try {
+      const data = await loadData();
+      if (!data.respostas) data.respostas = [];
+      data.respostas.push({
+        ts: Date.now(),
+        nome,
+        opcoes,
+        estrategia,
+        sugestao: sugestao || null,
+      });
+      await saveData(data);
+
+      document.getElementById('formScreen').style.display  = 'none';
+      document.getElementById('successScreen').style.display = 'block';
+    } catch(e) {
+      console.error(e);
+      btn.disabled = false;
+      btn.innerHTML = 'Enviar minha resposta 🪙';
+      errEl.style.display = 'block';
+    }
+  }
+
+  // ── Resultados ────────────────────────────────────────
+  async function abrirResultados() {
+    document.getElementById('formScreen').style.display    = 'none';
+    document.getElementById('successScreen').style.display = 'none';
+    document.getElementById('resultsScreen').style.display = 'block';
+    await renderResultados();
+  }
+
+  async function renderResultados() {
+    let data;
+    try { data = await loadData(); }
+    catch(e) { data = { respostas: [] }; }
+
+    const respostas = data.respostas || [];
+    const total = respostas.length;
+
+    document.getElementById('totalRespostas').textContent =
+      total + (total === 1 ? ' resposta' : ' respostas');
+
+    const btnH = document.getElementById('btnVerResultados');
+    btnH.style.display = 'block';
+    btnH.textContent = 'Ver resultados (' + total + ')';
+
+    // Barras
+    const opcaoMeta = {
+      cinema:           '🎬 Ingressos de cinema',
+      ifood:            '🛵 Vale iFood / Rappi',
+      presente_pequeno: '🎁 Presentinho (bombom, caneca…)',
+      streaming:        '📺 Streaming 1 mês',
+      folga:            '🏖️ Dia de folga extra',
+      show:             '🎭 Show / teatro / evento',
+      jantar:           '🍽️ Jantar para 2',
+      spa:              '💆 Spa / massagem',
+      gourmet:          '🥂 Experiência gourmet',
+      hotel:            '🏨 Hotel 1 noite',
+      viagem:           '✈️ Viagem / passeio',
+    };
+
+    const contagem = {};
+    Object.keys(opcaoMeta).forEach(k => contagem[k] = 0);
+    respostas.forEach(r => r.opcoes.forEach(o => { if (contagem[o] !== undefined) contagem[o]++; }));
+    const sorted = Object.entries(contagem).sort((a,b) => b[1]-a[1]);
+    const maxV = sorted[0]?.[1] || 1;
+
+    const barsEl = document.getElementById('barsContainer');
+    barsEl.innerHTML = '';
+    sorted.forEach(([key, count]) => {
+      if (count === 0 && total > 0) return;
+      const pct  = total > 0 ? Math.round(count/total*100) : 0;
+      const barW = total > 0 ? Math.round(count/maxV*100)  : 0;
+      barsEl.innerHTML += `
+        <div class="bar-wrap">
+          <div class="bar-label">
+            <span>${opcaoMeta[key]}</span>
+            <span style="color:#888">${count} voto${count!==1?'s':''} · ${pct}%</span>
+          </div>
+          <div class="bar-track">
+            <div class="bar-fill" data-w="${barW}"></div>
+          </div>
+        </div>`;
+    });
+    if (total === 0) barsEl.innerHTML = '<p class="empty-msg">Nenhuma resposta ainda.</p>';
+
+    setTimeout(() => {
+      document.querySelectorAll('.bar-fill').forEach(el => { el.style.width = el.dataset.w + '%'; });
+    }, 80);
+
+    // Estratégias
+    const stratMeta = {
+      gastar_logo:    '🎯 Gastar logo em pequenas recompensas',
+      guardar_medio:  '📅 Guardar alguns meses por algo bacana',
+      guardar_grande: '🌟 Guardar bastante por algo incrível',
+      misto:          '🔄 Misto — flexibilidade total',
+    };
+    const stratCount = {};
+    Object.keys(stratMeta).forEach(k => stratCount[k] = 0);
+    respostas.forEach(r => { if (r.estrategia) stratCount[r.estrategia]++; });
+    const stratEl = document.getElementById('strategyResults');
+    stratEl.innerHTML = '';
+    Object.entries(stratCount).sort((a,b) => b[1]-a[1]).forEach(([key, count]) => {
+      if (count === 0 && total > 0) return;
+      const pct = total > 0 ? Math.round(count/total*100) : 0;
+      stratEl.innerHTML += `
+        <div class="strat-row">
+          <span>${stratMeta[key]}</span>
+          <span class="strat-badge">${count} · ${pct}%</span>
+        </div>`;
+    });
+    if (total === 0) stratEl.innerHTML = '<p class="empty-msg">Nenhuma resposta ainda.</p>';
+
+    // Sugestões
+    const comSugestao = respostas.filter(r => r.sugestao);
+    const sugestEl = document.getElementById('sugestoesContainer');
+    if (comSugestao.length === 0) {
+      sugestEl.innerHTML = '<p class="empty-msg">Nenhuma sugestão registrada ainda.</p>';
+    } else {
+      sugestEl.innerHTML = comSugestao.map(r => {
+        const d = new Date(r.ts).toLocaleDateString('pt-BR');
+        return `<div class="sugestao-card">
+          "${r.sugestao}"
+          <div class="sugestao-autor">— ${r.nome} · ${d}</div>
+        </div>`;
+      }).join('');
+    }
+  }
+
+  // ── Exportar ──────────────────────────────────────────
+  async function exportarSugestoes() {
+    const data = await loadData();
+    const com  = (data.respostas || []).filter(r => r.sugestao);
+    if (com.length === 0) { alert('Nenhuma sugestão para exportar.'); return; }
+
+    let txt = 'SUGESTÕES — ContiCoin Enquete de Recompensas\n';
+    txt += '='.repeat(50) + '\n';
+    txt += `Exportado em: ${new Date().toLocaleString('pt-BR')}\n`;
+    txt += `Total de sugestões: ${com.length}\n\n`;
+    com.forEach((r, i) => {
+      const d = new Date(r.ts).toLocaleDateString('pt-BR');
+      txt += `${i+1}. [${d}] ${r.nome}\n   "${r.sugestao}"\n\n`;
+    });
+
+    const blob = new Blob([txt], { type: 'text/plain;charset=utf-8' });
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement('a');
+    a.href = url; a.download = 'sugestoes_conticoin.txt';
+    a.click(); URL.revokeObjectURL(url);
+  }
+
+  // ── Voltar ────────────────────────────────────────────
+  function voltarForm() {
+    document.getElementById('resultsScreen').style.display = 'none';
+    document.getElementById('formScreen').style.display    = 'block';
+    document.querySelectorAll('input[name="opcoes"]').forEach(el => el.checked = false);
+    document.querySelectorAll('input[name="estrategia"]').forEach(el => el.checked = false);
+    document.getElementById('sugestao').value  = '';
+    document.getElementById('nomeInput').value = '';
+    document.getElementById('nomeInput').disabled = false;
+    document.getElementById('anonCheck').checked  = false;
+    document.getElementById('errorMsg').style.display = 'none';
+    const btn = document.getElementById('btnEnviar');
     btn.disabled = false;
     btn.innerHTML = 'Enviar minha resposta 🪙';
-    alert('Erro ao salvar. Tente novamente.');
   }
-}
-
-// ── Resultados ────────────────────────────────────────
-async function abrirResultados() {
-  document.getElementById('formScreen').style.display = 'none';
-  document.getElementById('successScreen').style.display = 'none';
-  document.getElementById('resultsScreen').style.display = 'block';
-  await renderResultados();
-}
-
-async function renderResultados() {
-  const data = await loadData();
-  const respostas = data.respostas || [];
-  const total = respostas.length;
-
-  document.getElementById('totalRespostas').textContent =
-    total + (total === 1 ? ' resposta' : ' respostas');
-
-  // Atualiza botão header
-  const btnH = document.getElementById('btnVerResultados');
-  btnH.style.display = 'block';
-  btnH.textContent = 'Ver resultados (' + total + ')';
-
-  // ── Barras de experiências
-  const opcaoMeta = {
-    cinema:          { label: '🎬 Ingressos de cinema' },
-    ifood:           { label: '🛵 Vale iFood / Rappi' },
-    presente_pequeno:{ label: '🎁 Presentinho (bombom, caneca…)' },
-    streaming:       { label: '📺 Streaming 1 mês' },
-    folga:           { label: '🏖️ Dia de folga extra' },
-    show:            { label: '🎭 Show / teatro / evento' },
-    jantar:          { label: '🍽️ Jantar para 2' },
-    spa:             { label: '💆 Spa / massagem' },
-    gourmet:         { label: '🥂 Experiência gourmet' },
-    hotel:           { label: '🏨 Hotel 1 noite' },
-    viagem:          { label: '✈️ Viagem / passeio' },
-  };
-
-  const contagem = {};
-  Object.keys(opcaoMeta).forEach(k => contagem[k] = 0);
-  respostas.forEach(r => r.opcoes.forEach(o => { if (contagem[o] !== undefined) contagem[o]++; }));
-  const sorted = Object.entries(contagem).sort((a,b) => b[1]-a[1]);
-  const maxV = sorted[0]?.[1] || 1;
-
-  const barsEl = document.getElementById('barsContainer');
-  barsEl.innerHTML = '';
-  sorted.forEach(([key, count]) => {
-    if (count === 0 && total > 0) return; // esconde zerados
-    const pct = total > 0 ? Math.round(count/total*100) : 0;
-    const barW = total > 0 ? Math.round(count/maxV*100) : 0;
-    barsEl.innerHTML += `
-      <div class="bar-wrap">
-        <div class="bar-label">
-          <span>${opcaoMeta[key]?.label || key}</span>
-          <span style="color:#888">${count} voto${count!==1?'s':''} · ${pct}%</span>
-        </div>
-        <div class="bar-track">
-          <div class="bar-fill" data-w="${barW}"></div>
-        </div>
-      </div>`;
-  });
-  if (total === 0) barsEl.innerHTML = '<p class="empty-msg">Nenhuma resposta ainda.</p>';
-
-  setTimeout(() => {
-    document.querySelectorAll('.bar-fill').forEach(el => {
-      el.style.width = el.dataset.w + '%';
-    });
-  }, 80);
-
-  // ── Estratégias
-  const stratMeta = {
-    gastar_logo:     '🎯 Gastar logo em pequenas recompensas',
-    guardar_medio:   '📅 Guardar alguns meses por algo bacana',
-    guardar_grande:  '🌟 Guardar bastante por algo incrível',
-    misto:           '🔄 Misto — flexibilidade total',
-  };
-  const stratCount = {};
-  Object.keys(stratMeta).forEach(k => stratCount[k] = 0);
-  respostas.forEach(r => { if (r.estrategia) stratCount[r.estrategia]++; });
-  const stratEl = document.getElementById('strategyResults');
-  stratEl.innerHTML = '';
-  Object.entries(stratCount).sort((a,b)=>b[1]-a[1]).forEach(([key, count]) => {
-    if (count === 0 && total > 0) return;
-    const pct = total > 0 ? Math.round(count/total*100) : 0;
-    stratEl.innerHTML += `
-      <div class="strat-row">
-        <span>${stratMeta[key]}</span>
-        <span class="strat-badge">${count} · ${pct}%</span>
-      </div>`;
-  });
-  if (total === 0) stratEl.innerHTML = '<p class="empty-msg">Nenhuma resposta ainda.</p>';
-
-  // ── Sugestões
-  const comSugestao = respostas.filter(r => r.sugestao);
-  const sugestEl = document.getElementById('sugestoesContainer');
-  if (comSugestao.length === 0) {
-    sugestEl.innerHTML = '<p class="empty-msg">Nenhuma sugestão registrada ainda.</p>';
-  } else {
-    sugestEl.innerHTML = comSugestao.map(r => {
-      const data = new Date(r.ts).toLocaleDateString('pt-BR');
-      return `
-        <div class="sugestao-card">
-          "${r.sugestao}"
-          <div class="sugestao-autor">— ${r.nome} · ${data}</div>
-        </div>`;
-    }).join('');
-  }
-}
-
-// ── Exportar sugestões ───────────────────────────────
-async function exportarSugestoes() {
-  const data = await loadData();
-  const comSugestao = (data.respostas || []).filter(r => r.sugestao);
-  if (comSugestao.length === 0) { alert('Nenhuma sugestão para exportar.'); return; }
-
-  let txt = 'SUGESTÕES — ContiCoin Enquete de Recompensas\n';
-  txt += '='.repeat(50) + '\n';
-  txt += `Exportado em: ${new Date().toLocaleString('pt-BR')}\n`;
-  txt += `Total de sugestões: ${comSugestao.length}\n\n`;
-  comSugestao.forEach((r, i) => {
-    const d = new Date(r.ts).toLocaleDateString('pt-BR');
-    txt += `${i+1}. [${d}] ${r.nome}\n   "${r.sugestao}"\n\n`;
-  });
-
-  const blob = new Blob([txt], { type: 'text/plain;charset=utf-8' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url; a.download = 'sugestoes_conticoin.txt';
-  a.click(); URL.revokeObjectURL(url);
-}
-
-// ── Voltar ────────────────────────────────────────────
-function voltarForm() {
-  document.getElementById('resultsScreen').style.display = 'none';
-  document.getElementById('formScreen').style.display = 'block';
-  document.querySelectorAll('input[name="opcoes"]').forEach(el => el.checked = false);
-  document.querySelectorAll('input[name="estrategia"]').forEach(el => el.checked = false);
-  document.getElementById('sugestao').value = '';
-  document.getElementById('nomeInput').value = '';
-  document.getElementById('nomeInput').disabled = false;
-  document.getElementById('anonCheck').checked = false;
-  const btn = document.getElementById('btnEnviar');
-  btn.disabled = false;
-  btn.innerHTML = 'Enviar minha resposta 🪙';
-}
 </script>
 </body>
 </html>
